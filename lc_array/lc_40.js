@@ -19,7 +19,5 @@ var jump = function(nums) {
 console.log(jump([2, 3, 1, 1, 4]))
 get_sum(can, tar - can[i], i + 1, [...ans], result)
 ans.pop()
-}
-}
-}
+
 console.log(combinationSum2([1, 1, 6, 7, 10], 8))
