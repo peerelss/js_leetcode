@@ -70,7 +70,7 @@ var minimumRemoval = function(beans) {
   }
   return min_result
 };
-var maxProfit = function(prices) {
+var maxProfit1 = function(prices) {
   //动态规划 题目类似与求最长递增子序列类似。只不过求解的不是长度，而是首位之差。并且不要求连续。
   // 对于第 n 天，价格如果小于n+1, 则这次交易收益为 p[n+1]-p[n],然后累加到 收益 profile[n+1]上
   if (prices.length <= 1) { return 0 }
@@ -80,4 +80,19 @@ var maxProfit = function(prices) {
   }
   return max_p
 };
-console.log(maxProfit([7, 1, 5, 3, 6, 4]))
+var maxProfit = function(prices) {
+  //动态规划 实质是找到以前以后两个数使得 prices[i]<prices[j] 差最大，0<i<j<length
+  //创建两个临时变量，p_a 表示（有效最大值价格） p_b 表示（可能有效最大值价格）
+  //比如1 - 6 - 2 - 4, 对于price[0] 而言，4是有效最大值，6是可能有效最大值，取决与price[0]
+  //对于第n项，如果 price[n]>price_max_a  , 
+  if (prices.length <= 1) { return 0 }
+  let max_p = 0,
+    p_a = p_b = prices[prices.length - 1]
+  for (let i = prices.length - 2; i >= 0; i--) {
+    if (prices[i] > p_b) { p_b = prices[i] } //更新潜在最大值
+    if (p_a - max_p > prices[i]) { max_p = p_a - prices[i] }
+    if (p_b - max_p > prices[i]) { max_p = p_b - prices[i], p_a = p_b }
+  }
+  return max_p
+};
+console.log(maxProfit([1, 6, 2, 3]))
